@@ -1,0 +1,7 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "order food online",
+  "main": "root.js",
+  "license": "MIT"
+}
