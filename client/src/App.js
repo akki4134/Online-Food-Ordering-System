@@ -24,7 +24,6 @@ function App() {
         setData(value)
       })
     }
-    
 
     Fetch()
 
