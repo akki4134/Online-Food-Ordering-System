@@ -3,6 +3,8 @@ import http from 'http'
 import WebSocket from 'ws';
 import mongoose from 'mongoose'
 
+import User from "./Models/userSchema.js"
+
 import AuthRoute from './Routes/userRoute.js'
 
 const app = express()
@@ -25,21 +27,23 @@ mongoose.connection.on("error", (err) => {
     console.log("Mongoose Connection ERROR: " + err.message);
 });
 
-ws.on('connection', function connection(socket) {
-    console.log('A new client Connected!');
-   
+ws.on('connection', async function connection(socket) {
+
     socket.send('Welcome New Client!');
+    const data = await User.find({})
+    socket.send(JSON.stringify(data))
+
+    // console.log(socket)
 
     socket.on('message', function incoming(message) {
         console.log('received: %s', message);
-
-        ws.clients.forEach(function each(client) {
-            if (client !== ws && client.readyState === WebSocket.OPEN) {
-                client.send(message);
-            }
-        });
-
     });
+
+    socket.on('getuser', async function incoming() {
+        console.log('received: %s', user);
+    });
+
+
 });
 
 app.use(express.json()) // to send post request
