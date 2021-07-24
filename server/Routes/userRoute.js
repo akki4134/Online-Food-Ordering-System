@@ -1,11 +1,11 @@
 import express from 'express'
-import userController from '../Controllers/userController'
+import userController from '../Controllers/userController.js'
 
-const router = express.Router
+const AuthRoute = express.Router();
 
-router.post("/login", userController.login)
-router.post("/register", userController.register)
-router.get("/getallusers", userController.getallusers)
+// AuthRoute.post("/login", userController.login)
+AuthRoute.post("/register", userController().postregister)
+AuthRoute.get("/users", userController().getallusers)
 
-    
-module.exports = router;
+
+export default AuthRoute

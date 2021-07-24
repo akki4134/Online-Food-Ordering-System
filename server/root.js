@@ -3,6 +3,8 @@ import http from 'http'
 import WebSocket from 'ws';
 import mongoose from 'mongoose'
 
+import AuthRoute from './Routes/userRoute.js'
+
 const app = express()
 const server = http.createServer(app)
 
@@ -25,6 +27,7 @@ mongoose.connection.on("error", (err) => {
 
 ws.on('connection', function connection(socket) {
     console.log('A new client Connected!');
+   
     socket.send('Welcome New Client!');
 
     socket.on('message', function incoming(message) {
@@ -39,6 +42,11 @@ ws.on('connection', function connection(socket) {
     });
 });
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.use(express.json()) // to send post request
+app.use(express.urlencoded({ extended: true }))
+
+app.get('/test', (req, res) => res.send('Hello World!ofo! test working'))
+
+app.use('/auth/', AuthRoute)
 
 server.listen(4000, () => console.log(`Server Connected OFO-Api-S4000`))
